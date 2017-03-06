@@ -1,0 +1,6 @@
+[package]
+name = "dijkstra"
+version = "0.1.0"
+authors = ["Brooks J Rady <b.j.rady@gmail.com>"]
+
+[dependencies]
