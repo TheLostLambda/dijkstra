@@ -14,11 +14,11 @@ impl Graph {
     }
 
     pub fn lookup_id(&self, id: &str) -> Option<&Vertex> {
-        self.verts.iter().filter(|x| x.id == id).next()
+        self.verts.iter().find(|x| x.id == id)
     }
 
     pub fn lookup_id_mut(&mut self, id: &str) -> Option<&mut Vertex> {
-        self.verts.iter_mut().filter(|x| x.id == id).next()
+        self.verts.iter_mut().find(|x| x.id == id)
     }
 }
 
