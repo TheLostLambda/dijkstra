@@ -12,7 +12,15 @@ pub fn shortest_path(a: &str, b: &str, g: &mut Graph) -> Option<Path> {
         Some(ref mut vert) => vert,
         None => return None
     };
-    current.dist = (None, Some(0.0));
+
+    // Set initial distance to zero with no parent node
+    current.dist = (None, Some(0));
+
+    // Create a new HashSet to track visited nodes
+    let mut visited: HashSet<&Vertex> = HashSet::new();
+
+    // Mark inital node as visited
+    visited.insert(&*current);
 
     unimplemented!();
 }
