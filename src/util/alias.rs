@@ -1,2 +1,2 @@
 pub type ID = String;
-pub type Dist = u64;
+pub type Dist = i64;

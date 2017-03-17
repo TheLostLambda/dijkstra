@@ -1,6 +1,6 @@
 use super::*;
 
-#[derive(Hash, Eq, PartialEq)]
+#[derive(Clone)]
 pub struct Vertex {
     pub id: ID,
     pub dist: (Option<ID>,Option<Dist>),

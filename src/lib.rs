@@ -4,7 +4,7 @@ use std::collections::HashSet;
 use self::util::*;
 
 // This function runs Dijkstra's shortest path algorithm on the given graph and finds the shortest path from a to b
-pub fn shortest_path(a: &str, b: &str, g: &mut Graph) -> Option<Path> {
+pub fn shortest_path<'a>(a: &str, b: &str, g: &'a mut Graph) -> Option<&'a mut Graph>/*Option<Path>*/ {
 
     {
         // Set current vertex to 'a'
@@ -21,21 +21,24 @@ pub fn shortest_path(a: &str, b: &str, g: &mut Graph) -> Option<Path> {
     let mut visited: HashSet<ID> = HashSet::new();
 
     // Set current vertex
-    let current = g.lookup_id(a).unwrap();
+    let current = g.clone().lookup_id(a).unwrap();
 
     // Mark inital node as visited
     visited.insert(a.to_string());
 
     loop {
-        for (edge, terminal) in g.lookup_edges(&current.id) {
-            let target = g.lookup_id(terminal);
-            let new_dist = match current.dist {
-                (_, Some(x)) => x,
-                (_, None) => 0
+        for (edge, terminal) in g.clone().lookup_edges(&current.id) {
+            let mut target = g.lookup_id_mut(&terminal).unwrap();
+            let t_dist = current.clone().dist.1.unwrap() + edge.weight;
+            target.dist = match target {
+                &mut Vertex { id: _, dist: (_,Some(dist)) } => if t_dist < dist { (Some(current.clone().id), Some(dist)) } else { target.dist.clone() },
+                &mut Vertex { id: _, dist: (_,None) } => (Some(current.clone().id), Some(t_dist)),
             };
         }
         break;
     }
 
-    unimplemented!();
+    Some(g)
+
+    //unimplemented!();
 }
