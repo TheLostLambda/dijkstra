@@ -20,6 +20,11 @@ impl Graph {
     pub fn lookup_id_mut(&mut self, id: &str) -> Option<&mut Vertex> {
         self.verts.iter_mut().find(|x| x.id == id)
     }
+
+    pub fn lookup_edges(&self, id: &str) -> Vec<(&Edge,&ID)> {
+        self.edges.iter().filter(|x| x.link.0 == id || x.link.1 == id)
+            .map(|x| if x.link.0 == id { (x, &x.link.1) } else { (x, &x.link.0) }).collect()
+    }
 }
 
 impl<'a> fmt::Display for Graph {
