@@ -8,6 +8,7 @@ use dijkstra::util::*;
     * Condense and refine code (making sure that all tests are still being passed)
     * Profile code for performance and optimize for memory usage and speed
     * Test with larger, more complicated graphs
+    * Use this crate in a larger, graphical piston project with a pathfinding AI
 */
 
 fn main() {
