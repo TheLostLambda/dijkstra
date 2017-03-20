@@ -1,16 +1,6 @@
 extern crate dijkstra;
 use dijkstra::util::*;
 
-/*
-  Todo:
-    * Comment code
-    * Write tests for the shortest_path function
-    * Condense and refine code (making sure that all tests are still being passed)
-    * Profile code for performance and optimize for memory usage and speed
-    * Test with larger, more complicated graphs
-    * Use this crate in a larger, graphical piston project with a pathfinding AI
-*/
-
 fn main() {
     let g = Graph::new(vec![(6,"A","C"), (2,"A","B"), (1,"C","B"), (3,"C","D"), (5,"B","D")]);
     println!("\nHere is the current graph: \n{}", g);
