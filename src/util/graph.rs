@@ -16,10 +16,6 @@ impl Graph {
         Graph { verts: vs, edges: es }
     }
 
-    pub fn lookup_id(self, id: &str) -> Option<Vertex> {
-        self.verts.clone().into_iter().find(|x| x.id == id)
-    }
-
     pub fn lookup_id_mut(&mut self, id: &str) -> Option<&mut Vertex> {
         self.verts.iter_mut().find(|x| x.id == id)
     }
@@ -28,14 +24,38 @@ impl Graph {
         self.edges.clone().into_iter().filter(|x| x.link.0 == id || x.link.1 == id)
             .map(|x| if x.link.0 == id { (x.clone(), x.clone().link.1) } else { (x.clone(), x.clone().link.0) }).collect()
     }
+
+    pub fn route(&self, id: &str) -> Path {
+        let mut path = Vec::new();
+        let mut id = id;
+        loop {
+            let current = match self.verts.iter().find(|x| x.id == id) {
+                Some(vert) => vert,
+                None => return Path { verts: Vec::new() }
+            };
+            path.insert(0, current.clone());
+            match current.dist.0 {
+                Some(ref child) => id = child,
+                None => break
+            }
+        }
+        Path { verts: path }
+    }
 }
 
-impl<'a> fmt::Display for Graph {
+impl fmt::Display for Graph {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         try!(write!(f, "Edges:"));
         for &Edge { link: (ref a, ref b), weight: w} in self.edges.iter() {
             try!(write!(f, "\n\t{}, {} : {}", a, b, w));
         }
+        Ok(())
+    }
+}
+
+impl fmt::Debug for Graph {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        try!(fmt::Display::fmt(self,f));
         try!(write!(f, "\nVertices:"));
         for &Vertex { id: ref i, dist: (ref p, ref d)} in self.verts.iter() {
             let parent = match p {
