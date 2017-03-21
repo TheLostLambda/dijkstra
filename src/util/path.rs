@@ -1,6 +1,7 @@
 use super::*;
 use std::fmt;
 
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Path {
     pub verts: Vec<Vertex>,
 }

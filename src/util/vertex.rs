@@ -1,7 +1,7 @@
 use super::*;
 use std::cmp::Ordering;
 
-#[derive(Clone, Eq)]
+#[derive(Clone, Debug, Eq)]
 pub struct Vertex {
     pub id: ID,
     pub dist: (Option<ID>,Option<Dist>),
