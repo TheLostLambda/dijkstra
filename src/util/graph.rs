@@ -1,3 +1,6 @@
+/// The graph type is the central type within the dijkstra crate and stores a full representation
+/// of a weighted graph and provides several methods for the manipulation and reading of the graph
+
 use super::*;
 use std::fmt;
 use std::collections::HashSet;
