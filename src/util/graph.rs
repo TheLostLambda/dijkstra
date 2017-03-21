@@ -74,7 +74,7 @@ impl Graph {
     }
 
     pub fn lookup_edges(self, id: &str) -> Vec<(Edge,ID)> {
-        self.edges.clone().into_iter().filter(|x| x.link.0 == id || x.link.1 == id)
+        self.edges.iter().filter(|x| x.link.0 == id || x.link.1 == id)
             .map(|x| if x.link.0 == id { (x.clone(), x.clone().link.1) } else { (x.clone(), x.clone().link.0) }).collect()
     }
 
