@@ -36,7 +36,7 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
         pq.sort();
         current = pq.remove(0);
 
-        for (edge, terminal) in g.clone().lookup_edges(&current.id) {
+        for (edge, terminal) in g.clone().lookup_neighbors(&current.id) {
             let mut target = g.lookup_id_mut(&terminal).unwrap();
             let t_dist = current.clone().dist.1.unwrap() + edge.weight;
             target.dist = match target {

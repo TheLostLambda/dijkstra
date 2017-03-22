@@ -73,7 +73,7 @@ impl Graph {
         self.verts.iter_mut().find(|x| x.id == id)
     }
 
-    pub fn lookup_edges(self, id: &str) -> Vec<(Edge,ID)> {
+    pub fn lookup_neighbors(self, id: &str) -> Vec<(Edge,ID)> {
         self.edges.iter().filter(|x| x.link.0 == id || x.link.1 == id)
             .map(|x| if x.link.0 == id { (x.clone(), x.clone().link.1) } else { (x.clone(), x.clone().link.0) }).collect()
     }
