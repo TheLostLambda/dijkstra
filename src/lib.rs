@@ -31,14 +31,14 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
 
     while !pq.is_empty() {
         if current.id == b { break; }
-        
+
         visited.insert(current.clone().id);
         pq.sort();
         current = pq.remove(0);
 
-        for (edge, terminal) in g.clone().lookup_neighbors(&current.id) {
+        for (dist, terminal) in g.clone().lookup_neighbors(&current.id) {
             let mut target = g.lookup_id_mut(&terminal).unwrap();
-            let t_dist = current.clone().dist.1.unwrap() + edge.weight;
+            let t_dist = current.clone().dist.1.unwrap() + dist;
             target.dist = match target {
                 &mut Vertex { id: _, dist: (_,Some(dist)) } => if t_dist < dist { (Some(current.clone().id), Some(t_dist)) } else { target.dist.clone() },
                 &mut Vertex { id: _, dist: (_,None) } => (Some(current.clone().id), Some(t_dist)),

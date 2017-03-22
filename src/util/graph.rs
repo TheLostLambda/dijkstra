@@ -37,12 +37,18 @@ impl Graph {
         // Get an iterator over the data and for each tuple return an iterator of both IDs.
         // flat_map then flattens the iterator of iterators into a single iterator which
         // is finally collected into a HashSet. This collection into a HashSet removes duplicates.
-        let vs: HashSet<&str> = data.iter().flat_map(|&(_, a, b)| vec![a, b].into_iter()).collect();
+        let vs: HashSet<&str> = data.iter()
+                                    .flat_map(|&(_, a, b)| vec![a, b].into_iter())
+                                    .collect();
         // Map over the HashSet of IDs and create an iterator of new Vertices. Collect these into a vector.
-        let vs = vs.iter().map(|x| Vertex::new(x)).collect();
+        let vs = vs.iter()
+                   .map(|x| Vertex::new(x))
+                   .collect();
         // This line maps over the original data and converts the three-tuples into Edge structs.
         // They are collected in a new vector of Edges.
-        let es = data.iter().map(|&(w, a, b)| Edge { link: ( a.to_string(), b.to_string()), weight: w }).collect();
+        let es = data.iter()
+                     .map(|&(w, a, b)| Edge { link: ( a.to_string(), b.to_string()), weight: w })
+                     .collect();
         // Return the Graph with the processed vertices and edges
         Graph { verts: vs, edges: es }
     }
@@ -70,12 +76,37 @@ impl Graph {
     pub fn lookup_id_mut(&mut self, id: &str) -> Option<&mut Vertex> {
         // Get an iterator of mutable references and if the desired ID is present find will return
         // Some(&mut Vertex), if the desired ID is not present, None is returned.
-        self.verts.iter_mut().find(|x| x.id == id)
+        self.verts.iter_mut()
+                  .find(|x| x.id == id)
     }
 
-    pub fn lookup_neighbors(self, id: &str) -> Vec<(Edge,ID)> {
-        self.edges.iter().filter(|x| x.link.0 == id || x.link.1 == id)
-            .map(|x| if x.link.0 == id { (x.clone(), x.clone().link.1) } else { (x.clone(), x.clone().link.0) }).collect()
+    /// Return a vector of neighbors to the given ID and their respective distances.
+    ///
+    /// ## Example
+    /// ```
+    /// # #[macro_use] extern crate dijkstra;
+    /// # fn main() {
+    /// use dijkstra::util::*;
+    /// let g = Graph::new(vec![(6,"A","C"), (2,"A","B"), (1,"C","B"), (3,"C","D"), (5,"B","D")]);
+    ///
+    /// assert_eq!(g.lookup_neighbors("A"), [(6, "C".to_string()), (2, "B".to_string())]);
+    /// # }
+    /// ```
+    ///
+    /// This function returns data in a list of tuples. The first value of every tuple is a distance
+    /// representing the weight of the edge connecting the parent vertex (specified by the ID argument)
+    /// and the child vertex (the ID of which is returned as the second value of the tuple).
+    ///
+    /// Should the method be provided an ID for which there is no matching vertex in the graph, or should the
+    /// vertex specified have no neighbors, this method will return an empty vector.
+    pub fn lookup_neighbors(&self, id: &str) -> Vec<(Dist,ID)> {
+        // Get an iterator over edges and filter it leaving only the edges that somehow contain the
+        // parent node 'id'. Then map over this data creating tuples of the edge weight and the child
+        // vertex's ID. Finally collect into a vector.
+        self.edges.iter()
+                  .filter(|x| x.link.0 == id || x.link.1 == id)
+                  .map(|x| if x.link.0 == id { (x.weight.clone(), x.link.1.clone()) } else { (x.weight.clone(), x.link.0.clone()) })
+                  .collect()
     }
 
     pub fn route(&self, id: &str) -> Path {
