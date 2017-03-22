@@ -17,6 +17,7 @@ pub struct Graph {
     pub edges: Vec<Edge>
 }
 
+// Suggestion: Take an array as opposed to a vector in the new() method
 impl Graph {
     /// Graphs are constructed from a vector of three-tuples.
     ///
