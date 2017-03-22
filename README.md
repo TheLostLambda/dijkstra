@@ -7,6 +7,9 @@ To quickly build and run the crate use: ```cargo run```
 
 To build a release executable use: ```cargo build --release```
 
+## Documentation
+Build and launch documentation: ```cargo doc --open```
+
 ## Todo
   * Finish commenting code
   * Write tests for the ```dijkstra``` crate
