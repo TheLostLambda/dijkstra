@@ -1,3 +1,5 @@
+//! Provides various data structures and methods for working with the dijkstra crate
+
 pub use self::edge::*;
 pub use self::graph::*;
 pub use self::alias::*;

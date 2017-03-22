@@ -108,23 +108,6 @@ impl Graph {
                   .map(|x| if x.link.0 == id { (x.weight.clone(), x.link.1.clone()) } else { (x.weight.clone(), x.link.0.clone()) })
                   .collect()
     }
-
-    pub fn route(&self, id: &str) -> Path {
-        let mut path = Vec::new();
-        let mut id = id;
-        loop {
-            let current = match self.verts.iter().find(|x| x.id == id) {
-                Some(vert) => vert,
-                None => return Path { verts: Vec::new() }
-            };
-            path.insert(0, current.clone());
-            match current.dist.0 {
-                Some(ref child) => id = child,
-                None => break
-            }
-        }
-        Path { verts: path }
-    }
 }
 
 impl fmt::Display for Graph {

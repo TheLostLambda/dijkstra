@@ -47,5 +47,23 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
         pq = g.clone().verts.into_iter().filter(|x| !visited.contains(&x.id)).collect();
     }
 
-    Some(g.route(b))
+    Some(route(&g, b))
+}
+
+fn route(g: &Graph, id: &str) -> Path {
+    let mut path = Vec::new();
+    let mut id = id;
+    // Suggestion: Explore the possibility of replacing this loop with a recursive subroutine
+    loop {
+        let current = match g.verts.iter().find(|x| x.id == id) {
+            Some(vert) => vert,
+            None => return Path { verts: Vec::new() }
+        };
+        path.insert(0, current.clone());
+        match current.dist.0 {
+            Some(ref child) => id = child,
+            None => break
+        }
+    }
+    Path { verts: path }
 }
