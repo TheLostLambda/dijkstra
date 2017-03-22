@@ -1,17 +1,15 @@
 //! Provides a weighted graph type and provides several methods for working with it
 
-// Import everything from the dijkstra crate
+// Imports
 use super::*;
-// Import the fmt crate in order to implement the Display and Debug traits
 use std::fmt;
-// Import the HashSet type in order to remove duplicates objects from vectors
 use std::collections::HashSet;
 
-#[derive(Clone)]
 /// The Graph struct stores a weighted graph structure.
 ///
 /// The first vector is a list of all of the Vertices within the graph. The second stores a list of
 /// all of the Edges connecting the Vertices.
+#[derive(Clone)]
 pub struct Graph {
     // Verts stores all of the nodes within the graph
     pub verts: Vec<Vertex>,
@@ -110,6 +108,8 @@ impl Graph {
     }
 }
 
+// This implements the Display trait which allows for the pretty printing of a graph.
+// In this case, all of the edges within the graph are printed out in a visually appealing fashion.
 impl fmt::Display for Graph {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         try!(write!(f, "Edges:"));
@@ -120,6 +120,9 @@ impl fmt::Display for Graph {
     }
 }
 
+// This implements the Debug trait which behaves similarly to the Display trait but prints more
+// information that is potentially helpful when debugging. In addition to printing edge data, Debug
+// prints information regarding the state of each of the vertices as well.
 impl fmt::Debug for Graph {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         try!(fmt::Display::fmt(self,f));
