@@ -1,15 +1,35 @@
+//! Provides the vertex struct for storing vertex IDs and distance data
+
+// Imports
 use super::*;
 use std::cmp::Ordering;
 
+/// The Vertex struct represents a single node on a graph.
+///
+/// The id field stores a unique String identifier that can be used to reference
+/// this Vertex within a graph. The dist tuple stores data for use in the Dijkstra
+/// algorithm. The first element of the tuple stores the ID of a parent Vertex from
+/// which the second element, the numerical distance, is calculated.
+///
+/// For a greater understanding of the dist field, see the shortest_path() function
+/// in the base module of the dijkstra crate.
 #[derive(Clone, Debug, Eq)]
 pub struct Vertex {
+    // Unique String identifier used to reference this vertex
     pub id: ID,
-    pub dist: (Option<ID>,Option<Dist>),
+    // Temporary distance data for use in the shortest_path() function
+    // Suggestion: Find a way to move this data to the shortest_path() function
+    // and remove it from the Vertex struct.
+    pub dist: (Option<ID>, Option<Dist>),
 }
 
 impl Vertex {
+    /// Vertices can be constructed from a single String identifier.
     pub fn new(n: &str) -> Vertex {
-        Vertex { id: n.to_string(), dist: (None,None) }
+        Vertex {
+            id: n.to_string(),
+            dist: (None, None),
+        }
     }
 }
 

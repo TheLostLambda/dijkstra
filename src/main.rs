@@ -2,7 +2,7 @@ extern crate dijkstra;
 use dijkstra::util::*;
 
 fn main() {
-    let g = Graph::new(vec![(6,"A","C"), (2,"A","B"), (1,"C","B"), (3,"C","D"), (5,"B","D")]);
+    let g = Graph::new(vec![(6, "A", "C"), (2, "A", "B"), (1, "C", "B"), (3, "C", "D"), (5, "B", "D")]);
     println!("\nHere is the current graph: \n{}", g);
 
     let p = dijkstra::shortest_path("A", "D", &g).unwrap();

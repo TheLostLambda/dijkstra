@@ -50,9 +50,20 @@ impl Path {
     /// If the path is empty (it contains no vertices) this function will return a length of 0.
     pub fn length(&self) -> Dist {
         // If the path is empty, return a length of 0
-        if self.verts.is_empty() { 0 }
+        if self.verts.is_empty() {
+            0
+        }
         // Otherwise get the last vertex in the vector and return its numerical distance
-        else { match self.verts.last().unwrap().dist.1 { Some(x) => x, None => 0 } }
+        else {
+            match self.verts
+                      .last()
+                      .unwrap()
+                      .dist
+                      .1 {
+                Some(x) => x,
+                None => 0,
+            }
+        }
     }
 }
 

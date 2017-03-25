@@ -3,6 +3,8 @@ pub mod util;
 use std::collections::HashSet;
 use self::util::*;
 
+// Suggestion: Do away Vertex and replace with HashMap of IDs and distances
+
 // This function runs Dijkstra's shortest path algorithm on the given graph and finds the shortest path from a to b
 pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
 
@@ -17,7 +19,7 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
         let mut temp = g.lookup_id_mut(a);
         let temp = match temp {
             Some(ref mut vert) => vert,
-            None => return None
+            None => return None,
         };
 
         // Set initial distance to zero with no parent node
@@ -27,10 +29,16 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
     let mut visited: HashSet<ID> = HashSet::new();
 
     // Set up the priority queue with the visited nodes removed
-    let mut pq: Vec<Vertex> = g.clone().verts.into_iter().filter(|x| !visited.contains(&x.id)).collect();
+    let mut pq: Vec<Vertex> = g.clone()
+        .verts
+        .into_iter()
+        .filter(|x| !visited.contains(&x.id))
+        .collect();
 
     while !pq.is_empty() {
-        if current.id == b { break; }
+        if current.id == b {
+            break;
+        }
 
         visited.insert(current.clone().id);
         pq.sort();
@@ -38,13 +46,26 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
 
         for (dist, terminal) in g.clone().lookup_neighbors(&current.id) {
             let mut target = g.lookup_id_mut(&terminal).unwrap();
-            let t_dist = current.clone().dist.1.unwrap() + dist;
+            let t_dist = current.clone()
+                .dist
+                .1
+                .unwrap() + dist;
             target.dist = match target {
-                &mut Vertex { id: _, dist: (_,Some(dist)) } => if t_dist < dist { (Some(current.clone().id), Some(t_dist)) } else { target.dist.clone() },
-                &mut Vertex { id: _, dist: (_,None) } => (Some(current.clone().id), Some(t_dist)),
+                &mut Vertex { id: _, dist: (_, Some(dist)) } => {
+                    if t_dist < dist {
+                        (Some(current.clone().id), Some(t_dist))
+                    } else {
+                        target.dist.clone()
+                    }
+                }
+                &mut Vertex { id: _, dist: (_, None) } => (Some(current.clone().id), Some(t_dist)),
             };
         }
-        pq = g.clone().verts.into_iter().filter(|x| !visited.contains(&x.id)).collect();
+        pq = g.clone()
+            .verts
+            .into_iter()
+            .filter(|x| !visited.contains(&x.id))
+            .collect();
     }
 
     Some(route(&g, b))
@@ -57,12 +78,12 @@ fn route(g: &Graph, id: &str) -> Path {
     loop {
         let current = match g.verts.iter().find(|x| x.id == id) {
             Some(vert) => vert,
-            None => return Path { verts: Vec::new() }
+            None => return Path { verts: Vec::new() },
         };
         path.insert(0, current.clone());
         match current.dist.0 {
             Some(ref child) => id = child,
-            None => break
+            None => break,
         }
     }
     Path { verts: path }
