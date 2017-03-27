@@ -3,8 +3,6 @@ pub mod util;
 use std::collections::HashSet;
 use self::util::*;
 
-// Suggestion: Do away Vertex and replace with HashMap of IDs and distances
-
 // This function runs Dijkstra's shortest path algorithm on the given graph and finds the shortest path from a to b
 pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
 

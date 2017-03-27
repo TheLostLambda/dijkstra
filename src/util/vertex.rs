@@ -25,6 +25,17 @@ pub struct Vertex {
 
 impl Vertex {
     /// Vertices can be constructed from a single String identifier.
+    ///
+    /// ## Example
+    /// ```
+    /// # #[macro_use] extern crate dijkstra;
+    /// # fn main() {
+    /// use dijkstra::util::*;
+    /// let v = Vertex::new("A");
+    /// # }
+    /// ```
+    ///
+    /// The dist field is set to (None,None) by default.
     pub fn new(n: &str) -> Vertex {
         Vertex {
             id: n.to_string(),
@@ -33,6 +44,9 @@ impl Vertex {
     }
 }
 
+// Implementing the Ord trait allows us to order the Vertices by their distances.
+// The Ord trait allows us to sort a list of Vertices so that the low distances
+// come first, the the higher distances, then finally the infinite distances (None).
 impl Ord for Vertex {
     fn cmp(&self, other: &Vertex) -> Ordering {
         if self.dist.1.is_none() {
@@ -45,12 +59,16 @@ impl Ord for Vertex {
     }
 }
 
+// PartialOrd is a trait dependency of Ord and must be given a definition. Here is
+// is defined in terms of the original Ord definition.
 impl PartialOrd for Vertex {
     fn partial_cmp(&self, other: &Vertex) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
+// PartialEq is required to derive Eq (see the #[derive]) and is defined as two
+// structs having the same distance as each other.
 impl PartialEq for Vertex {
     fn eq(&self, other: &Vertex) -> bool {
         self.dist.1 == other.dist.1
