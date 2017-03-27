@@ -11,7 +11,6 @@ To build a release executable use: ```cargo build --release```
 Build and launch documentation: ```cargo doc --open```
 
 ## Todo
-  * Finish commenting code
   * Write tests for the ```dijkstra``` crate
   * Condense, polish and refine code
   * Profile code for performance and optimize

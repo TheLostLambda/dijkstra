@@ -103,7 +103,7 @@ impl Graph {
     /// vertex specified have no neighbors, this method will return an empty vector.
     pub fn lookup_neighbors(&self, id: &str) -> Vec<(Dist, ID)> {
         // Get an iterator over edges and filter it leaving only the edges that somehow contain the
-        // parent node 'id'. Then map over this data creating tuples of the edge weight and the child
+        // parent vertex 'id'. Then map over this data creating tuples of the edge weight and the child
         // vertex's ID. Finally collect into a vector.
         self.edges
             .iter()
