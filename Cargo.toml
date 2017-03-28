@@ -2,14 +2,3 @@
 name = "dijkstra"
 version = "1.0.0"
 authors = ["Brooks J Rady <b.j.rady@gmail.com>"]
-
-[lib]
-name = "dijkstra"
-path = "src/lib.rs"
-
-[[bin]]
-name = "dijkstra"
-path = "src/main.rs"
-doc = false
-
-[dependencies]
