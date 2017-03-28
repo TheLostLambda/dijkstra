@@ -7,6 +7,9 @@ To quickly build and run the crate use: ```cargo run```
 
 To build a release executable use: ```cargo build --release```
 
+## Testing
+To run tests and verify that any modifications to the code have not introduced regressions use: ```cargo test```
+
 ## Documentation
 Build and launch documentation: ```cargo doc --open```
 
