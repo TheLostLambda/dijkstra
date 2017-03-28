@@ -11,8 +11,6 @@ To build a release executable use: ```cargo build --release```
 Build and launch documentation: ```cargo doc --open```
 
 ## Todo
-  * Write tests for the ```dijkstra``` crate
   * Condense, polish and refine code
   * Profile code for performance and optimize
-  * Test against larger, more complicated graphs
   * Incorporate this crate into a larger, graphical piston project with a path-finding AI

@@ -65,11 +65,11 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
         // Set the current vertex as visited
         visited.insert(current.clone().id);
 
-        // Set up the priority queue with the visited vertices removed
+        // Set up the priority queue with the visited and infinite distance vertices removed
         let mut pq: Vec<Vertex> = g.clone()
             .verts
             .into_iter()
-            .filter(|x| !visited.contains(&x.id))
+            .filter(|x| !visited.contains(&x.id) && !x.dist.1.is_none())
             .collect();
 
         // If the priority queue is empty (all vertices have been visited), return None
