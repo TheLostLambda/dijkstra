@@ -87,7 +87,7 @@ pub fn shortest_path(a: &str, b: &str, g: &Graph) -> Option<Path> {
         for (dist, terminal) in g.clone().lookup_neighbors(&current.id) {
 
             // Set the target vertex to the vertex returned by lookup_neighbors()
-            let mut target = g.lookup_id_mut(&terminal).unwrap();
+            let target = g.lookup_id_mut(&terminal).unwrap();
 
             // Find the distance to the target vertex through the current vertex
             let t_dist = current.clone()
